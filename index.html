@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bé Tập Tính</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body class="">
+    <div class="wrap p-3">
+        <h1 class="mt-5 text-left">Bé Tập Tính</h1>
+        <div class="d-flex align-items-stretch mt-4">
+            <form action="">
+                <div class="form__group">
+                    <label for="number1" class="mr-2">Số thứ nhất</label>
+                    <input type="text" name="number1" placeholder="Nhập số thứ nhất">
+                </div>
+                <div class="form__group mt-2">
+                    <label for="number2" class="mr-2">Số thứ nhất</label>
+                    <input type="text" name="number2" placeholder="Nhập số thứ hai">
+                </div>
+                <div class="form__group d-flex mt-2">
+                    <label class="mr-2 flex-grow-1">Kết quả</label>
+                    <input type="text" readonly>
+                </div>
+
+            </form>
+            <div class="ml-5 d-flex flex-column align-items-start">
+                <div class="row row-cols-2 flex-grow-1 w-75">
+                    <label class="col">
+                        <input type="radio" name="operator" value="add">
+                        Cộng
+                    </label>
+                    <label class="col">
+                        <input type="radio" name="operator" value="sub">
+                        Trừ
+                    </label>
+                    <label class="col">
+                        <input type="radio" name="operator" value="mul">
+                        Nhân
+                    </label>
+                    <label class="col">
+                        <input type="radio" name="operator" value="div">
+                        Chia
+                    </label>
+                </div>
+                <button>Tính</button>
+            </div>
+        </div>
+        <div class="notification__group mt-4 d-flex">
+            <p class="notification__label mr-4">Thông báo</p>
+            <p class="notification__content text-danger"></p>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script>
+        let number1 = document.querySelector('input[name="number1"]');
+        let number2 = document.querySelector('input[name="number2"]');
+        let result = document.querySelector('input[readonly]');
+        let noti = document.querySelector('.notification__content');
+        let btn_calculate = document.querySelector('button');
+        number1.addEventListener('blur', function (e) {
+            const value = e.target.value;
+            if (value === "" || Number.isNaN(Number(value))) {
+                noti.innerHTML = 'Giá trị nhập ở ô <i>Số thứ nhất</i> không là số';
+            }
+            else {
+                noti.innerHTML = '';
+            }
+        });
+        number2.addEventListener('blur', function (e) {
+
+            const value = e.target.value;
+            if (value === "" || Number.isNaN(Number(value))) {
+                noti.innerHTML = 'Giá trị nhập ở ô <i>Số thứ hai</i> không là số';
+            }
+            else {
+                noti.innerHTML = '';
+            }
+        });
+        btn_calculate.addEventListener('click', function () {
+            const value1 = number1.value;
+            const value2 = number2.value;
+            const operator = document.querySelector('input[name="operator"]:checked');
+            if (!operator) {
+                noti.innerHTML = 'Chưa chọn phép toán';
+                return;
+            }
+            noti.innerHTML = '';
+            switch (operator.value) {
+                case 'add':
+                    result.value = Number(value1) + Number(value2);
+                    break;
+                case 'sub':
+                    result.value = Number(value1) - Number(value2);
+                    break;
+                case 'mul':
+                    result.value = Number(value1) * Number(value2);
+                    break;
+                case 'div':
+                    if (Number(value2) === 0) {
+                        noti.innerHTML = 'Không thể chia cho 0';
+                        return;
+                    }
+                    result.value = Number(value1) / Number(value2);
+                    break;
+            }
+        });
+
+    </script>
+</body>
+
+</html>
